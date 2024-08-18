@@ -22,7 +22,7 @@
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/exclusiveabhi/task-manager.git
-   cd taskflow
+   cd task-manager
    ```
 
 2. **Backend Setup**:
