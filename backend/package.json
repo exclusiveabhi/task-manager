@@ -1,0 +1,29 @@
+{
+  "name": "task-flow",
+  "version": "1.0.0",
+  "type": "module",
+
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/exclusiveabhi/task-manager.git"
+  },
+  "author": "Abhishek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/exclusiveabhi/task-manager/issues"
+  },
+  "homepage": "https://github.com/exclusiveabhi/task-manager#readme",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
