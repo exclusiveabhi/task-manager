@@ -56,7 +56,7 @@
      ```
    - Create a `.env` file in the `frontend` directory and add your environment variables:
      ```plaintext
-     REACT_APP_API_URL=http://localhost:5000
+     REACT_APP_API_URL=http://localhost:4000
      ```
    - Start the frontend development server:
      ```bash
