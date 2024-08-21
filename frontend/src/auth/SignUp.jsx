@@ -28,15 +28,34 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      fullName: data.get('fullName'),
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const response = await fetch('http://localhost:4000/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          fullName: fullName
+        }),
+        credentials: 'include' 
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log('User registered:', data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
+  
 
   return (
     <ThemeProvider theme={defaultTheme}>
