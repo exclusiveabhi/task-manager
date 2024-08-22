@@ -14,31 +14,48 @@ import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import TaskCard from '../cards/TaskCard'; 
 
 const actions = [
   { icon: <PrintIcon />, name: 'Download' },
   { icon: <ShareIcon />, name: 'Share' },
   { icon: <CreateIcon />, name: 'Create' },
-  
 ];
-
+//current date
+const current = new Date(); 
+const currentDate = current.toLocaleDateString();
 export default function ControlledOpenSpeedDial() {
   const [openSpeedDial, setOpenSpeedDial] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
-  const [status, setStatus] = React.useState('');
+  const [tasks, setTasks] = React.useState([]);
+  
+  // Separate states for each task detail
+  const [title, setTitle] = React.useState('');
+  const [description, setDescription] = React.useState('');
+  const [status, setStatus] = React.useState('pending'); // Default value can be changed
+  const [endDate, setEndDate] = React.useState('');
 
   const handleOpenSpeedDial = () => setOpenSpeedDial(true);
   const handleCloseSpeedDial = () => setOpenSpeedDial(false);
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
-    handleCloseSpeedDial(); // Close SpeedDial when the dialog opens
+    handleCloseSpeedDial();
   };
 
   const handleCloseDialog = () => setOpenDialog(false);
 
-  const handleStatusChange = (event) => {
-    setStatus(event.target.value);
+  const handleCreateTask = () => {
+    setTasks((prevTasks) => [
+      ...prevTasks,
+      { title, description, status, endDate },
+    ]);
+    handleCloseDialog();
+    // Clear form after creating task
+    setTitle('');
+    setDescription('');
+    setStatus('pending');
+    setEndDate('');
   };
 
   return (
@@ -79,6 +96,8 @@ export default function ControlledOpenSpeedDial() {
             type="text"
             fullWidth
             variant="outlined"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             required
           />
           <TextField
@@ -90,6 +109,8 @@ export default function ControlledOpenSpeedDial() {
             variant="outlined"
             multiline
             rows={4}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             required
           />
           <TextField
@@ -98,7 +119,7 @@ export default function ControlledOpenSpeedDial() {
             select
             label="Status"
             value={status}
-            onChange={handleStatusChange}
+            onChange={(e) => setStatus(e.target.value)}
             fullWidth
             variant="outlined"
             required
@@ -117,16 +138,32 @@ export default function ControlledOpenSpeedDial() {
             InputLabelProps={{
               shrink: true,
             }}
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
             required
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseDialog}>Cancel</Button>
-          <Button onClick={handleCloseDialog} variant="contained" color="primary">
+          <Button onClick={handleCreateTask} variant="contained" color="primary">
             Create
           </Button>
         </DialogActions>
       </Dialog>
+
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+
+        {tasks.map((task, index) => (
+          <TaskCard
+            key={index}
+            title={task.title}
+            description={task.description}
+            status={task.status}
+            endDate={task.endDate}
+           currentDate={currentDate}
+          />
+        ))}
+      </Box>
     </Box>
   );
 }
