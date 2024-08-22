@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -21,7 +20,7 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      Task Flow
+        Task Flow
       {' '}
       {new Date().getFullYear()}
       {'.'}
@@ -32,32 +31,31 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
+
+    const data = new FormData(event.currentTarget);
+    const email = data.get('email');
+    const password = data.get('password');
 
     try {
-      const response = await axios.post("http://localhost:4000/signin", {
-        email,
-        password
-      }, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      });
+      const response = await axios.post('http://localhost:4000/signin', { email, password });
 
-      if (response.status === 200) { // Check for successful login
-        toast.success("Login Successfully !");
-        navigate('/home'); // Navigate to the home page
-      } else {
-        toast.error("Invalid email or password. Please try again !");
+      if (response.status === 200) {
+        
+        // Store the token in localStorage
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data));
+        
+        toast.success('Login Successfully!');
+
+        // Redirect to the home route
+        navigate('/home');
       }
     } catch (error) {
-      toast.error("Login failed: " + (error.response?.data?.message || error.message));
+      toast.error(error.response?.data?.message || 'Error logging in');
     }
   };
 
@@ -89,8 +87,6 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
-              value={email} // Controlled input
-              onChange={(e) => setEmail(e.target.value)} // Update state
             />
             <TextField
               margin="normal"
@@ -101,8 +97,6 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
-              value={password} // Controlled input
-              onChange={(e) => setPassword(e.target.value)} // Update state
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
