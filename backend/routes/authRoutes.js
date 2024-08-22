@@ -1,13 +1,18 @@
-import express from "express";
-import { login, register } from "../controllers/authController.js";
+// authRoutes.js
+import express from 'express';
+import { login, register } from '../controllers/authController.js';
 
 const router = express.Router();
-// router.use(express.json());
-// router.use('/api/auth', authRoutes);
 
+// Route for user login
+router.post('/signin', login);
 
-router.post("/signin", login);
-router.post("/logout" )
-router.post("/signup", register);
+// Route for user logout (you might need to implement this in the controller)
+// router.post('/logout', (req, res) => {
+//   res.status(200).json({ message: 'User logged out' });
+// });
+
+// Route for user registration
+router.post('/signup', register);
 
 export default router;
