@@ -26,9 +26,9 @@ export const register = async (req, res) => {
     // Generate a JWT token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.status(201).json({ id: user._id, email: user.email, token });
+    res.status(201).json({ id: user._id, email: user.email, fullName: user.fullName, token });
   } catch (error) {
-    res.status(500).json({ message: 'Error registering user', error });
+    res.status(500).json({ message: 'Error registering user', error: error.message });
   }
 };
 
@@ -45,14 +45,14 @@ export const login = async (req, res) => {
     // Compare the password
     const passwordIsValid = await bcrypt.compare(password, user.password);
     if (!passwordIsValid) {
-      return res.status(401).json({ message: 'Invalid Password' });
+      return res.status(401).json({ message: 'Invalid password' });
     }
 
     // Generate a JWT token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-    res.status(200).json({ id: user._id, email: user.email, token });
+    res.status(200).json({ id: user._id, email: user.email, fullName: user.fullName, token });
   } catch (error) {
-    res.status(500).json({ message: 'Error logging in user', error });
+    res.status(500).json({ message: 'Error logging in user', error: error.message });
   }
 };
