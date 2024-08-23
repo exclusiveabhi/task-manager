@@ -54,7 +54,7 @@
      ```bash
      npm install
      ```
-   - Create a `.env` file in the `frontend` directory and add your environment variables:
+   - Create a `.env` file in the `frontend` and in the `backend` directory and add your environment variables:
      ```plaintext
      REACT_APP_API_URL=http://localhost:4000
      ```
