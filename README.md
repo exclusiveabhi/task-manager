@@ -11,7 +11,7 @@
 
 ## Tech Stack
 
-- **Frontend**: React.js with React Router, Axios for API calls, and styled-components for styling.
+- **Frontend**: React.js with React Router, Axios for API calls, and styled-components for responsive.
 - **Backend**: Node.js, Express.js, and MongoDB for the database.
 - **Authentication**: JWT (JSON Web Tokens) for secure user authentication.
 - **Database**: MongoDB with Mongoose for object modeling.

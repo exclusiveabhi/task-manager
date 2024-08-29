@@ -41,7 +41,8 @@ export default function SignIn() {
     const password = data.get('password');
 
     try {
-      const response = await axios.post('http://localhost:4000/signin', { email, password });
+      const response = await axios.post('http://localhost:4000/api/auth/signin', { email, password });
+
 
       if (response.status === 200) {
         
@@ -55,6 +56,7 @@ export default function SignIn() {
         navigate('/home');
       }
     } catch (error) {
+      console.log(error)
       toast.error(error.response?.data?.message || 'Error logging in');
     }
   };

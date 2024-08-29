@@ -5,6 +5,7 @@ import SignUp from "./auth/SignUp";
 import Home from "./pages/Home";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import './index.css';
 
 // notfound ka route or add krna hai !
 function AuthHandler() {
